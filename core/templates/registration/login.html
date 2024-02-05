@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+Signup
+{% endblock title %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+
+{% endblock head %}
+{% block content %}
+<div class="center">
+    <h1>Log in</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="txt_field">
+            <input type="username" name="username" required>
+            <span></span>
+            <label>Username</label>
+        </div>
+        <div class="txt_field">
+            <input type="password" name="password1" required>
+            <span></span>
+            <label>Password</label>
+        </div>
+        <div class="pass">Mot de pass oublié ?</div>
+
+        <input type="submit" value="Submit">
+        <div class="signup_link">
+            If you're a new member <a href="#">Signup</a>
+        </div>
+        {% if form.errors or form.non_field_errors %}
+        <div class="errors">
+            {% for field in form%}
+            {{field.errors}}
+            {% endfor %}
+            {{form.non_field_errors}}
+
+        </div>
+        {% endif %}
+
+    </form>
+</div>
+{% endblock content %}

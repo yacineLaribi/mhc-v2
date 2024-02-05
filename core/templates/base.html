@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
+    <link rel="shortcut icon" type="image/x-icon" href="{%static 'assets/imgs/template/favicon.svg'%}">
+    <link href="{%static 'assets/css/style_version%3D4.1.css'%}" rel="stylesheet">
+
+    <title>{% block title %}{% endblock title %}| Stagini</title>
+    {% block head %}
+    {% endblock head %}
+  </head>
+  <style>
+      {% block style %}
+
+    {% endblock style %}
+
+    body{
+        min-height: 100vh;
+    }
+  </style>
+  <body>
+
+    <header class="header sticky-bar">
+      <div class="container">
+        <div class="main-header">
+          <div class="header-left">
+            <div class="header-logo"><a class="d-flex" href="{%url 'home'%}"><img alt="jobBox" src="{% static 'assets/imgs/brands/logo-new.svg'%} "></a></div>
+          </div>
+          <div class="header-nav">
+            <nav class="nav-main-menu">
+              <ul class="main-menu" >
+                <li ><a href="{%url 'home'%}">Home</a></li>
+                  {% if request.user.category == "student" %}
+                  <li><a href="{%url 'browse'%}">Find Internship</a></li>
+                  <li><a href="{%url 'recruiters'%}">Recruiters</a></li>
+                  {% elif request.user.category == "entreprise" %}
+                  <li><a href="{%url 'browse'%}">Find Internship</a></li>
+                  <li><a href="{%url 'candidates'%}">Candidates</a></li>
+                <li class="dashboard"><a href="{%url 'new'%}">Add Internship</a></li>
+                  {% elif not request.user.is_authenticated %}
+                  <li><a href="{%url 'recruiters'%}">Recruiters</a></li>
+                  <li><a href="{%url 'candidates'%}">Candidates</a></li>
+                  {% endif %}
+                <li><a href="https://www.notion.so/5e16b4e71ac44f37b28b840a8fea8f05?v=2aeca89769d84d62bb51cc89fff041ca" target='_blank'>Blog</a></li>
+                {% if request.user.is_authenticated %}
+
+                <li class="dashboard"><a href="{%url 'profile'%}">Dashboard</a></li>
+              <a class="btn btn-default btn-shadow ml-40 hover-up" href="{%url 'logout'%}">Log out</a></div>
+              </ul>
+            </nav>
+                {% else %}
+          <div class="header-right">
+            <div class="block-signin"><a class="text-link-bd-btom hover-up" href="{%url 'signup'%}">Register</a>
+            <a class="btn btn-default btn-shadow ml-40 hover-up" href="{%url 'login'%}">Log in</a></div>
+          </div>
+        </div>
+      </div>
+
+              {% endif %}
+            <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
+          </div>
+    </header>
+        <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
+      <div class="mobile-header-wrapper-inner">
+        <div class="mobile-header-content-area">
+          <div class="perfect-scroll">
+            <div class="mobile-search mobile-header-border mb-30">
+              <form action="#">
+                <input type="text" placeholder="Search…"><i class="fi-rr-search"></i>
+              </form>
+            </div>
+            <div class="mobile-menu-wrap mobile-header-border">
+              <!-- mobile menu start-->
+              <nav>
+                <ul class="mobile-menu font-heading">
+                 <li ><a href="{%url 'home'%}">Home</a></li>
+                  {% if request.user.category == "student" %}
+                  <li><a href="{%url 'browse'%}">Find Internship</a></li>
+                  <li><a href="{%url 'recruiters'%}">Recruiters</a></li>
+                  {% elif request.user.category == "entreprise" %}
+                  <li><a href="{%url 'browse'%}">Find Internship</a></li>
+                  <li><a href="{%url 'candidates'%}">Candidates</a></li>
+                <li class="dashboard"><a href="{%url 'new'%}">Add Internship</a></li>
+                  {% elif not request.user.is_authenticated %}
+                  <li><a href="{%url 'recruiters'%}">Recruiters</a></li>
+                  <li><a href="{%url 'candidates'%}">Candidates</a></li>
+                  {% endif %}
+                <li><a href="https://www.notion.so/5e16b4e71ac44f37b28b840a8fea8f05?v=2aeca89769d84d62bb51cc89fff041ca">Blog</a></li>
+                {% if request.user.is_authenticated %}
+
+                <li class="dashboard"><a href="{%url 'profile'%}">Dashboard</a></li>
+              <a class="btn btn-default btn-shadow ml-40 hover-up" href="{%url 'logout'%}">Log out</a>
+              
+                </ul>
+              </nav>
+                {% else %}
+          <div class="header-right">
+            <div class="block-signin"><a class="text-link-bd-btom hover-up" href="{%url 'signup'%}">Register</a>
+            <a class="btn btn-default btn-shadow ml-40 hover-up" href="{%url 'login'%}">Log in</a></div>
+          </div>
+                {% endif %}
+            </div>
+            <div class="mobile-account">
+              <h6 class="mb-10">Your Account</h6>
+            </div>
+            <div class="site-copyright">Copyright 2023 © setagini. <br>Designed by Phoenix team.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
+      <div class="mobile-header-wrapper-inner">
+        <div class="mobile-header-content-area">
+          <div class="perfect-scroll">
+            <div class="mobile-search mobile-header-border mb-30">
+              <form action="#">
+                <input type="text" placeholder="Search…"><i class="fi-rr-search"></i>
+              </form>
+            </div>
+            <div class="mobile-menu-wrap mobile-header-border">
+              <!-- mobile menu start-->
+              <nav>
+                <ul class="mobile-menu font-heading">
+                <li ><a href="{%url 'home'%}">Home</a></li>
+                  {% if request.user.category == "student" %}
+                  <li><a href="{%url 'browse'%}">Find Internship</a></li>
+                  <li><a href="{%url 'recruiters'%}">Recruiters</a></li>
+                  {% elif request.user.category == "entreprise" %}
+                  <li><a href="{%url 'browse'%}">Find Internship</a></li>
+                  <li><a href="{%url 'candidates'%}">Candidates</a></li>
+                <li class="dashboard"><a href="{%url 'new'%}">Add Internship</a></li>
+                  {% elif not request.user.is_authenticated %}
+                  <li><a href="{%url 'recruiters'%}">Recruiters</a></li>
+                  <li><a href="{%url 'candidates'%}">Candidates</a></li>
+                  {% endif %}
+                <li><a href="https://www.notion.so/5e16b4e71ac44f37b28b840a8fea8f05?v=2aeca89769d84d62bb51cc89fff041ca">Blog</a></li>
+                {% if request.user.is_authenticated %}
+
+                <li class="dashboard"><a href="{%url 'profile'%}">Dashboard</a></li>
+              <a class="btn btn-default btn-shadow ml-40 hover-up" href="{%url 'logout'%}">Log out</a>
+                {% endif %}
+              
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="py-6 px-6 ">
+      {% block content %} {% endblock content %}
+    </div>
+  </body>
+    <script src="{%static 'assets/js/vendor/modernizr-3.6.0.min.js'%}"></script>
+    <script src="{%static 'assets/js/vendor/jquery-3.6.0.min.js'%}"></script>
+    <script src="{%static 'assets/js/vendor/jquery-migrate-3.3.0.min.js'%}"></script>
+    <script src="{%static 'assets/js/vendor/bootstrap.bundle.min.js'%}"></script>
+    <script src="{%static 'assets/js/plugins/waypoints.js'%}"></script>
+    <script src="{%static 'assets/js/plugins/wow.js'%}"></script>
+    <script src="{%static 'assets/js/plugins/magnific-popup.js'%}"></script>
+    <script src="{%static 'assets/js/plugins/perfect-scrollbar.min.js'%}"></script>
+    <script src="{%static 'assets/js/plugins/select2.min.js'%}"></script>
+    <script src="{%static 'assets/js/plugins/isotope.js'%}"></script>
+    <script src="{%static 'assets/js/plugins/scrollup.js'%}"></script>
+    <script src="{%static 'assets/js/plugins/swiper-bundle.min.js'%}"></script>
+    <script src="{%static 'assets/js/plugins/counterup.js'%}"></script>
+    <script src="{%static 'assets/js/main_v%3D4.1.js'%}"></script>
+</html>

@@ -1,0 +1,166 @@
+so give me a model that extracts data from pdf file of resume and predict the validité of accepting it in an internship
+can you make an api to do that ?
+generate a script that do this for me to integrate it in my django backend
+ **Model for Extracting Data from PDF Resume and Predicting Internship Validity**
+
+**API Implementation:**
+
+```python
+import fitz  # PyMuPDF library for PDF manipulation
+import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Load the pre-trained model
+model = LogisticRegression()
+model.load_model('internship_validity_model.pkl')
+
+# Define the API endpoint
+@app.route('/internship_validity', methods=['POST'])
+def internship_validity():
+    # Parse the PDF file
+    pdf_file = request.files['resume']
+    doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
+    text = ""
+    for page in doc:
+        text += page.getText()
+
+    # Extract features from the resume text
+    vectorizer = TfidfVectorizer()
+    features = vectorizer.fit_transform([text])
+
+    # Predict the validity of the resume
+    prediction = model.predict(features)
+
+    # Return the prediction result
+    return jsonify({'prediction': prediction[0]})
+```
+
+**Script for Integrating the API in Django Backend:**
+
+```python
+# Import the necessary modules
+import requests
+import json
+
+# Define the function to send a request to the API and get the prediction
+def predict_internship_validity(resume_file):
+    # Convert the resume file to bytes
+    resume_bytes = resume_file.read()
+
+    # Send a POST request to the API with the resume file
+    response = requests.post('http://localhost:5000/internship_validity', files={'resume': resume_bytes})
+
+    # Parse the JSON response and extract the prediction
+    prediction = json.loads(response.text)['prediction']
+
+    return prediction
+
+# Integrate the API in Django views
+def internship_view(request):
+    if request.method == 'POST':
+        # Get the resume file from the request
+        resume_file = request.FILES['resume']
+
+        # Predict the validity of the resume
+        prediction = predict_internship_validity(resume_file)
+
+        # Redirect to the appropriate page based on the prediction
+        if prediction == 1:
+            return redirect('/internship_accepted/')
+        else:
+            return redirect('/internship_rejected/')
+    else:
+        return render(request, 'internship_form.html')
+```
+
+can you explain more what you did : and what should i write in my views models and the other files ?
+ Let's break down the provided code and explain each part in more detail:
+
+**Model:**
+
+The model is already pre-trained and saved in a file called 'internship_validity_model.pkl'. It's a Logistic Regression model that takes features extracted from the resume text and predicts the validity of the internship application.
+
+**API Implementation:**
+
+1. `@app.route('/internship_validity', methods=['POST'])`: This line defines the API endpoint. It specifies that the endpoint is '/internship_validity' and it accepts POST requests.
+
+2. `pdf_file = request.files['resume']`: This line retrieves the resume file from the POST request. It assumes that the form field name for the resume file is 'resume'.
+
+3. `doc = fitz.open(stream=pdf_file.read(), filetype="pdf")`: This line uses the PyMuPDF library to open the PDF file and extract its text content.
+
+4. `text = ""`: This initializes an empty string to store the extracted text from the PDF file.
+
+5. `for page in doc:`: This loop iterates over each page in the PDF document.
+
+6. `text += page.getText()`: This line extracts the text from the current page and appends it to the `text` string.
+
+7. `vectorizer = TfidfVectorizer()`: This line creates a TfidfVectorizer object. TF-IDF (Term Frequency-Inverse Document Frequency) is a method for converting text into numerical features.
+
+8. `features = vectorizer.fit_transform([text])`: This line converts the extracted text into numerical features using the TF-IDF vectorizer.
+
+9. `prediction = model.predict(features)`: This line uses the pre-trained model to predict the validity of the internship application based on the extracted features.
+
+10. `return jsonify({'prediction': prediction[0]})`: This line returns the prediction as a JSON response.
+
+**Script for Integrating the API in Django Backend:**
+
+1. `import requests`: This line imports the requests library, which is used to send HTTP requests to the API.
+
+2. `import json`: This line imports the json library, which is used to parse JSON responses from the API.
+
+3. `def predict_internship_validity(resume_file)`: This function takes the resume file as an argument and sends a POST request to the API with the resume file. It then parses the JSON response and extracts the prediction.
+
+4. `def internship_view(request)`: This is a Django view function that handles the internship application form.
+
+5. `if request.method == 'POST':`: This checks if the request is a POST request, which means that the user has submitted the form.
+
+6. `resume_file = request.FILES['resume']`: This line retrieves the resume file from the POST request. It assumes that the form field name for the resume file is 'resume'.
+
+7. `prediction = predict_internship_validity(resume_file)`: This line calls the `predict_internship_validity` function to get the prediction for the resume.
+
+8. `if prediction == 1:`: This checks if the prediction is 1, which indicates that the internship application is valid.
+
+9. `return redirect('/internship_accepted/')`: If the prediction is 1, the user is redirected to the '/internship_accepted/' page.
+
+10. `else:`: If the prediction is not 1, the user is redirected to the '/internship_rejected/' page.
+
+**To integrate the API in your Django project, you need to:**
+
+- **Add the API implementation code to your Django project's views.py file.**
+- **Add the script for integrating the API to your project's models.py file.**
+- **Create the necessary templates for the internship form and the pages to redirect to based on the prediction.**
+- **Configure your Django project's settings and URL patterns to use the views and templates correctly.**
+
+I hope this explanation is clear and helpful. Let me know if you have any further questions.
+from where did you get this model ? : 
+# Load the pre-trained model
+model = LogisticRegression()
+model.load_model('internship_validity_model.pkl')
+ The pre-trained model `LogisticRegression()` is loaded from a file named `internship_validity_model.pkl`. This file is assumed to exist in the same directory as the script.
+
+To obtain this pre-trained model, you can either train it yourself or download it from a reliable source. Here are some options:
+
+**Train the Model Yourself:**
+
+1. Collect a dataset of labeled resumes. The labels can be binary (valid/invalid) or multi-class (accepted/rejected/waitlisted).
+2. Preprocess the resumes to extract relevant features, such as skills, experience, and education.
+3. Use a machine learning algorithm, such as Logistic Regression or Random Forest, to train a model on the labeled data.
+
+**Download a Pre-trained Model:**
+
+1. Search for publicly available pre-trained models for internship validity prediction. Some sources include Kaggle, GitHub, and academic research papers.
+2. Make sure to evaluate the model's performance and ensure that it is suitable for your specific use case.
+
+Once you have obtained the pre-trained model, you can save it to a file (e.g., `internship_validity_model.pkl`) and load it into your Django application using the `load_model()` method.
+
+In the provided code, the model is loaded using the following line:
+
+```python
+model.load_model('internship_validity_model.pkl')
+```
+
+This assumes that the model file is located in the same directory as the script. You may need to adjust the path to the model file if it is located elsewhere.

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{%load static%}
+    {% block title %}
+    Profile 
+    {% endblock title %}
+    {% block content %}
+    <main class="main">
+
+      <section class="section-box mt-50">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-12">
+              <div class="box-nav-tabs nav-tavs-profile mb-5">
+                <ul class="nav" role="tablist">
+                  <li><a class="btn btn-border aboutus-icon mb-20 active" href="#tab-my-profile" data-bs-toggle="tab" role="tab" aria-controls="tab-my-profile" aria-selected="true">Profile</a></li>
+                </ul>
+                <div class="border-bottom pt-10 pb-10"></div>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-8 col-sm-12 col-12 mb-50">
+              <div class="content-single">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="tab-my-profile" role="tabpanel" aria-labelledby="tab-my-profile">
+                    <h3 class="mt-0 mb-15 color-brand-1"> <b>{{user.username}}</b> 's  Account</h3>
+                    <div class="mt-35 mb-40 box-info-profie">
+                      <div class="image-profile">
+                      {% if request.user.category == "student" %}
+                      <img src="{%static 'assets/imgs/profile.png'%}" alt="jobbox">
+                      {% else %}
+                      <img src="{%static 'assets/imgs/company_icon.png'%}" alt="jobbox">
+
+                      {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  
+
+    </main>
+
+    {% endblock content%}

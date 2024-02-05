@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}
+Signup
+{% endblock title %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+
+{% endblock head %}
+{% block content %}
+<div class="center" style="margin: 12% 0;">
+    <h1>Sign up</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="txt_field">
+            {{form.username}}
+            
+            <span></span>
+            <label>Username</label>
+        </div>
+
+        <div class="txt_field">
+            {{form.password1}}
+            <span></span>
+            <label>Password</label>
+        </div>
+
+        <div class="txt_field">
+            {{form.password2}}
+            <span></span>
+            <label>Confirm your Password</label>
+        </div>
+
+        <div class="label"> <label> Sign up as : </label> </div> <br>
+        {{form.category}}
+        <br><br>
+        {% if form.errors or form.non_field_errors %}
+        <div class="errors">
+            {% for field in form%}
+            {{field.errors}}
+            {% endfor %}
+            {{form.non_field_errors}}
+
+        </div>
+        {% endif %}
+        <br>
+        <div class="pass">Mot de pass oublié ?</div>
+
+        <input type="submit" value="Submit">
+        <div class="signup_link">
+            If you're already a member <a href="#">Login</a>
+        </div>
+
+    </form>
+</div>
+{% endblock content %}
