@@ -4,7 +4,7 @@ This is a web application called "Stagini" that I've developed during the Muhand
 
 About Stagini
 =============
-Stagini is a web application developed to address a specific need or problem statement identified during the Muhandis Hackthon Challenge. It serves [purpose here].
+Stagini is a web application developed to address a specific need or problem statement identified during the Muhandis Hackthon Challenge. It serves `students` to help them find `internships` during their studies journey.
 
 Technologies Used
 =================
