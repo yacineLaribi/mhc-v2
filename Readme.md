@@ -78,7 +78,10 @@ python manage.py runserver
 ```
 Access the Application:
 =======================
+
 Once the server is running, open your web browser and go to http://localhost:8000 to access the Stagini web application.
+
+
 Contributing
 ============
 Contributions to Stagini are welcome! If you have any suggestions, improvements, or would like to fix a bug, feel free to submit a pull request.
