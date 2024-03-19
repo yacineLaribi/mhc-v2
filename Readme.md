@@ -69,8 +69,9 @@ Static Files Collection:
 Collect static files with:
 ```
 python manage.py collectstatic
-Run the Server:
 ```
+Run the Server:
+
 Finally, start the Django development server:
 ```
 python manage.py runserver
